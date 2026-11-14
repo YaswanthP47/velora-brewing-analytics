@@ -1,0 +1,117 @@
+VELORA BREWING - DATA VALIDATION REPORT
+
+======================================================================
+CHECK 1: Table sizes
+======================================================================
+Product_Master             13 rows x 12 columns
+Raw_Materials              14 rows x  5 columns
+Suppliers                  20 rows x  7 columns
+Employees                 100 rows x  8 columns
+Distributors               35 rows x  5 columns
+Customers                 600 rows x  6 columns
+Marketing_Campaigns        60 rows x  8 columns
+Production_Batches        465 rows x 11 columns
+Quality_Control           465 rows x 10 columns
+Procurement_Orders       1200 rows x 11 columns
+Sales_Orders             4500 rows x  8 columns
+Sales_Order_Lines       11278 rows x  9 columns
+Inventory_Movements      6000 rows x  8 columns
+Monthly_Expenses          414 rows x  5 columns
+Customer_Feedback         500 rows x  9 columns
+Equipment_Maintenance     300 rows x  7 columns
+Demand_History            624 rows x  5 columns
+
+======================================================================
+CHECK 2: Missing values
+======================================================================
+Inventory_Movements.batch_reference: 4739 missing (79.0%)
+Inventory_Movements.order_reference: 4784 missing (79.7%)
+
+Note: Inventory_Movements batch_reference / order_reference are EXPECTED
+to be empty (a sales dispatch has no batch, a production receipt has no order).
+
+======================================================================
+CHECK 3: Duplicate IDs (each ID must be unique)
+======================================================================
+[OK  ] Product_Master.product_id: 0 duplicates
+[OK  ] Raw_Materials.material_id: 0 duplicates
+[OK  ] Suppliers.supplier_id: 0 duplicates
+[OK  ] Employees.employee_id: 0 duplicates
+[OK  ] Distributors.distributor_id: 0 duplicates
+[OK  ] Customers.customer_id: 0 duplicates
+[OK  ] Marketing_Campaigns.campaign_id: 0 duplicates
+[OK  ] Production_Batches.batch_id: 0 duplicates
+[OK  ] Quality_Control.qc_test_id: 0 duplicates
+[OK  ] Procurement_Orders.po_id: 0 duplicates
+[OK  ] Sales_Orders.order_id: 0 duplicates
+[OK  ] Sales_Order_Lines.order_line_id: 0 duplicates
+[OK  ] Inventory_Movements.movement_id: 0 duplicates
+[OK  ] Monthly_Expenses.expense_id: 0 duplicates
+[OK  ] Customer_Feedback.feedback_id: 0 duplicates
+[OK  ] Equipment_Maintenance.maintenance_id: 0 duplicates
+
+Fully duplicated rows: none
+
+======================================================================
+CHECK 4: Foreign keys (does every linked ID exist in its parent table?)
+======================================================================
+[OK  ] Sales_Orders.customer_id -> Customers.customer_id: 0 orphan rows
+[OK  ] Sales_Orders.distributor_id -> Distributors.distributor_id: 0 orphan rows
+[OK  ] Sales_Order_Lines.order_id -> Sales_Orders.order_id: 0 orphan rows
+[OK  ] Sales_Order_Lines.product_id -> Product_Master.product_id: 0 orphan rows
+[OK  ] Production_Batches.product_id -> Product_Master.product_id: 0 orphan rows
+[OK  ] Quality_Control.batch_id -> Production_Batches.batch_id: 0 orphan rows
+[OK  ] Procurement_Orders.supplier_id -> Suppliers.supplier_id: 0 orphan rows
+[OK  ] Procurement_Orders.material_id -> Raw_Materials.material_id: 0 orphan rows
+[OK  ] Inventory_Movements.product_id -> Product_Master.product_id: 0 orphan rows
+[OK  ] Customer_Feedback.customer_id -> Customers.customer_id: 0 orphan rows
+[OK  ] Customer_Feedback.product_id -> Product_Master.product_id: 0 orphan rows
+[OK  ] Marketing_Campaigns.featured_product_id -> Product_Master.product_id: 0 orphan rows
+[OK  ] Demand_History.product_id -> Product_Master.product_id: 0 orphan rows
+[OK  ] Inventory_Movements.batch_reference -> Production_Batches: 0 orphans
+[OK  ] Inventory_Movements.order_reference -> Sales_Orders: 0 orphans
+
+======================================================================
+CHECK 5: Date ranges (earliest and latest date per table)
+======================================================================
+Production_Batches     production_date    2023-01-05  ->  2026-10-28   (unreadable dates: 0)
+Quality_Control        test_date          2023-01-05  ->  2026-10-28   (unreadable dates: 0)
+Procurement_Orders     order_date         2023-01-01  ->  2026-10-21   (unreadable dates: 0)
+Sales_Orders           order_date         2023-01-01  ->  2026-10-31   (unreadable dates: 0)
+Inventory_Movements    movement_date      2023-01-01  ->  2026-10-22   (unreadable dates: 0)
+Monthly_Expenses       expense_month      2023-01-01  ->  2026-10-01   (unreadable dates: 0)
+Customer_Feedback      feedback_date      2023-01-01  ->  2026-10-21   (unreadable dates: 0)
+Equipment_Maintenance  maintenance_date   2023-01-06  ->  2026-10-21   (unreadable dates: 0)
+Demand_History         month              2023-01-01  ->  2026-12-01   (unreadable dates: 0)
+Marketing_Campaigns    start_date         2023-01-20  ->  2026-08-14   (unreadable dates: 0)
+Customers              first_order_date   2023-01-06  ->  2026-11-01   (unreadable dates: 0)
+
+======================================================================
+CHECK 6: Calculation checks (tolerance = 0.05 EUR / 0.002)
+======================================================================
+[OK  ] net_sales = qty x price x (1 - discount)  [1% tolerance]: 0 of 11278 rows do not match
+[OK  ] gross_profit = net_sales - cogs: 0 of 11278 rows do not match
+[OK  ] production_loss = planned - actual: 0 of 465 rows do not match
+[OK  ] yield_rate = actual / planned: 0 of 465 rows do not match
+[OK  ] purchase_value = qty x unit_cost: 0 of 1200 rows do not match
+[OK  ] lead_time = actual_delivery - order_date: 0 of 1200 rows do not match
+
+======================================================================
+EXTRA: Business facts you should know
+======================================================================
+Late supplier deliveries: 687 of 1200 (57.2%)  -> on-time rate 42.8%
+Order status mix:   {'Delivered': 2321, 'Cancelled': 765, 'Open': 720, 'Shipped': 694}
+Batch status mix:   {'Completed': 286, 'Delayed': 91, 'On Hold': 88}
+QC status mix:      {'Pass': 327, 'Review': 138}
+Gross margin % (all lines): 66.0%
+Average yield rate: 88.6%
+Sales lines with quantity <= 0: 0
+
+======================================================================
+EXTRA: Cross-sheet inconsistencies (document these in your README!)
+======================================================================
+Avg on-time rate STATED in Suppliers sheet:        90.0%
+Avg on-time rate CALCULATED from Procurement_Orders: 42.7%
+  -> They disagree. For KPIs, use the calculated value (KPI_Glossary formula).
+Orders placed BEFORE the customer's first_order_date: 52.0%
+  -> first_order_date is unreliable; derive it from Sales_Orders if you need it.
