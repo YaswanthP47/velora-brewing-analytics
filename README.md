@@ -18,14 +18,16 @@ Goal: Excel -> Python -> SQL -> EDA -> Cleaning -> Statistics -> ML -> NLP/GenAI
 ## How to run
 
     pip install -r requirements.txt
-    python src/load_data.py        # load all sheets
-    python src/validate_data.py    # run 6 quality checks -> reports/validation_report.txt
+    python src/load_data.py          # load all sheets
+    python src/validate_data.py      # run 6 quality checks -> reports/validation_report.txt
+    python src/build_database.py     # build SQLite database -> data/velora.db
+    python src/run_queries.py        # run 20 SQL queries -> reports/sql_results/
 
 ## Progress
 
 - [x] Step 1: Project setup
 - [x] Step 2: Load and validate data
-- [ ] Step 3: SQL database
+- [x] Step 3: SQL database
 
 ## Known data issues (found in Step 2 validation)
 
@@ -34,3 +36,29 @@ Goal: Excel -> Python -> SQL -> EDA -> Cleaning -> Statistics -> ML -> NLP/GenAI
    gives about 43%. I use the calculated value, following the KPI_Glossary formula.
 2. **Customer first_order_date is unreliable.** About 52% of orders happen
    before the customer's stated first_order_date. I derive it from Sales_Orders instead.
+
+## SQL Analysis (Step 3)
+
+The Excel data is loaded into a SQLite database (`data/velora.db`).
+20 business queries are in [sql/queries.sql](sql/queries.sql); results are saved
+as CSV files in `reports/sql_results/`.
+Techniques used: JOIN, GROUP BY, CASE WHEN, CTEs and window functions (LAG, RANK, moving average).
+Cancelled orders are excluded from all revenue figures.
+
+### Key findings
+
+- **Revenue and margin:** net sales of about EUR 6.77 million with a 66.0% gross margin.
+- **Top products:** Royal Reserve, Midnight Stout and Alpine IPA lead on revenue.
+- **Discounts hurt margin:** margin falls from 68.3% (0-5% discount) to 63.0% (15%+ discount).
+- **Suppliers:** calculated on-time delivery rates (33%-57%) are far below the rates
+  stated in the Suppliers sheet (84%-97%).
+
+### Example result
+
+<!-- ![Revenue by product](images/q03_revenue_by_product.png) -->
+
+### Data limitations
+
+- Inventory movements have no opening stock, so absolute stock levels cannot be calculated.
+- Monthly expenses exceed gross profit in every month of this synthetic dataset.
+- 2026 contains data only up to October, so year-on-year comparison needs care.
