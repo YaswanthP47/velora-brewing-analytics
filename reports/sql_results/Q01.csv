@@ -1,0 +1,5 @@
+table_name,row_count
+Sales_Orders,4500
+Sales_Order_Lines,11278
+Production_Batches,465
+Procurement_Orders,1200

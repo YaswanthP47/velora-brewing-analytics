@@ -1,0 +1,4 @@
+production_line,batches,avg_yield_pct,delayed,on_hold
+Maribor Line A,135,89.0,25,23
+Maribor Line C,173,88.5,41,30
+Maribor Line B,157,88.4,25,35

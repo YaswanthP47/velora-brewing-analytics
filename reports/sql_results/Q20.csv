@@ -1,0 +1,6 @@
+equipment,jobs,total_downtime_h,total_cost_eur
+Lab Equipment,79,738.0,288857.0
+Cooling System,61,608.0,189138.0
+Bottling Line,62,592.0,206503.0
+Pasteuriser,51,535.0,180345.0
+Fermentation Tank,47,465.0,160905.0

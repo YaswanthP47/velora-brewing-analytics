@@ -1,0 +1,11 @@
+customer_alias,customer_type,country,orders,net_sales_eur
+Customer_0301,Retailer,Czechia,15,33770.0
+Customer_0574,Retailer,Germany,12,33062.0
+Customer_0084,Bar,Germany,12,32459.0
+Customer_0569,Retailer,Germany,13,31120.0
+Customer_0034,Restaurant,Austria,10,31008.0
+Customer_0541,Online Customer,Italy,10,29954.0
+Customer_0434,Online Customer,Germany,11,29808.0
+Customer_0381,Restaurant,Croatia,9,28450.0
+Customer_0069,Bar,Germany,10,27652.0
+Customer_0008,Retailer,Croatia,11,27384.0
