@@ -18,16 +18,19 @@ Goal: Excel -> Python -> SQL -> EDA -> Cleaning -> Statistics -> ML -> NLP/GenAI
 ## How to run
 
     pip install -r requirements.txt
-    python src/load_data.py          # load all sheets
-    python src/validate_data.py      # run 6 quality checks -> reports/validation_report.txt
-    python src/build_database.py     # build SQLite database -> data/velora.db
-    python src/run_queries.py        # run 20 SQL queries -> reports/sql_results/
+    python src/load_data.py                   # load all sheets
+    python src/validate_data.py               # run 6 quality checks -> reports/validation_report.txt
+    python src/build_database.py              # build SQLite database -> data/velora.db
+    python src/run_queries.py                 # run 20 SQL queries -> reports/sql_results/
+    python src/generate_docs.py               # create docs/ (dictionary, KPIs, data model)
+    python src/generate_synthetic_data.py     # create synthetic CSVs in data/synthetic/
 
 ## Progress
 
 - [x] Step 1: Project setup
 - [x] Step 2: Load and validate data
 - [x] Step 3: SQL database
+- [x] Step 4: Documentation and synthetic data generator
 
 ## Known data issues (found in Step 2 validation)
 
@@ -62,3 +65,10 @@ Cancelled orders are excluded from all revenue figures.
 - Inventory movements have no opening stock, so absolute stock levels cannot be calculated.
 - Monthly expenses exceed gross profit in every month of this synthetic dataset.
 - 2026 contains data only up to October, so year-on-year comparison needs care.
+
+## Documentation (Step 4)
+
+- [Data dictionary](docs/data_dictionary.md): all 17 tables and 134 columns
+- [KPI definitions](docs/kpi_definitions.md): formulas, SQL and current values
+- [Data model, assumptions and known issues](docs/data_model.md)
+- Reproducible generator: `python src/generate_synthetic_data.py --seed 42`
