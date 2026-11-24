@@ -52,7 +52,11 @@ sold to customers (`Sales_Orders` + `Sales_Order_Lines`), and customers react (`
 | 6 | Inventory has no opening stock | Movement totals are negative for products | Report net movements, never stock on hand |
 | 7 | Expenses exceed gross profit every month | Synthetic cost levels | Describe as a dataset property, not a business conclusion |
 | 8 | `season` in Demand_History is inconsistent | e.g. January labelled Spring; labels differ between products in the same month | Rebuild season from the month in Step 6 |
-| 9 | 2026 is incomplete | Transactions stop at 2026-10-31 | Compare same months across years, not full years |
+| 9 | 2026 is incomplete | Transactions stop at 2026-10-31 | Compare Jan-Oct across years. Like for like, sales are flat (EUR 1.47M to 1.50M); the full-year drop is only the missing Nov-Dec |
+| 10 | Procurement spend far above revenue | Purchases EUR 28.2M vs net sales EUR 6.8M (about 4x) | Compare suppliers and categories only; never compare purchases with revenue |
+| 11 | Demand_History does not reconcile with orders | Reports 54%-63% of order-line units and rises while orders are flat | Treat it as a separate series when forecasting |
+| 12 | `customer_type` and `sales_channel` unrelated | An "Online Customer" buys only 2% through the Online channel, like every other type | Do not use customer_type to explain channel behaviour |
+| 13 | Online orders are tiny | Online has 26% of orders but 2.2% of sales (average 40 units per line, maximum 80) | Analyse Online separately from other channels |
 
 ## 4. Synthetic data generator (`src/generate_synthetic_data.py`)
 
