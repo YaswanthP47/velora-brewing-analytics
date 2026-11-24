@@ -31,6 +31,7 @@ Goal: Excel -> Python -> SQL -> EDA -> Cleaning -> Statistics -> ML -> NLP/GenAI
 - [x] Step 2: Load and validate data
 - [x] Step 3: SQL database
 - [x] Step 4: Documentation and synthetic data generator
+- [x] Step 5: EDA and visualization
 
 ## Known data issues (found in Step 2 validation)
 
@@ -72,3 +73,29 @@ Cancelled orders are excluded from all revenue figures.
 - [KPI definitions](docs/kpi_definitions.md): formulas, SQL and current values
 - [Data model, assumptions and known issues](docs/data_model.md)
 - Reproducible generator: `python src/generate_synthetic_data.py --seed 42`
+
+## Exploratory Data Analysis (Step 5)
+
+Full report: [reports/eda_report.md](reports/eda_report.md) | Notebook: [notebooks/02_eda.ipynb](notebooks/02_eda.ipynb) | 19 charts in [reports/figures/](reports/figures/)
+
+**How to run:** open `notebooks/02_eda.ipynb` in Jupyter or VS Code and choose **Run All**. The charts are saved to `reports/figures/`.
+
+Revenue and profit figures exclude cancelled orders. 2026 contains data only up to 31 October, so years are compared January to October.
+
+### Key findings
+
+- **Manufacturing:** average yield is 88.6% and 11.3% of planned volume is lost. Production lines and batch status make no difference to yield.
+- **Quality:** 29.7% of batches go to Review. Differences between products and lines are consistent with chance (chi-square p = 0.49 and 0.36), and lab measurements do not explain the decision.
+- **Sales:** January to October sales are flat across all four years (EUR 1.47M to 1.50M), with no stable seasonality. Gross margin is 66.0%.
+- **Margin follows price:** the cheapest beers earn about 60% margin, the most expensive about 69% (r = 0.85).
+- **Discounts do not pay off:** margin falls from 68.3% to 63.0% as discounts rise, while units per order stay the same.
+- **Online channel:** 26% of orders but only 2.2% of sales, because online orders are very small.
+- **Supply:** 57% of supplier deliveries are late, and the on-time rate stated in the Suppliers sheet cannot be trusted (stated about 90%, calculated about 43%).
+
+![Margin vs price](reports/figures/fig09_margin_vs_price.png)
+
+![Net sales trend](reports/figures/fig07_sales_trend.png)
+
+### Known data issues
+
+13 issues are documented in [docs/data_model.md](docs/data_model.md). Besides the two listed above, the main new ones are: 3. Procurement purchases (EUR 28.2M) are about four times net sales (EUR 6.8M). 4. Demand_History does not reconcile with the order lines (54% to 63% of the units, rising while orders are flat). 5. `customer_type` and `sales_channel` are unrelated.
