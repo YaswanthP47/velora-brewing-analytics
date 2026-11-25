@@ -32,6 +32,7 @@ Goal: Excel -> Python -> SQL -> EDA -> Cleaning -> Statistics -> ML -> NLP/GenAI
 - [x] Step 3: SQL database
 - [x] Step 4: Documentation and synthetic data generator
 - [x] Step 5: EDA and visualization
+- [x] Step 6: Data cleaning and preprocessing
 
 ## Known data issues (found in Step 2 validation)
 
@@ -99,3 +100,27 @@ Revenue and profit figures exclude cancelled orders. 2026 contains data only up 
 ### Known data issues
 
 13 issues are documented in [docs/data_model.md](docs/data_model.md). Besides the two listed above, the main new ones are: 3. Procurement purchases (EUR 28.2M) are about four times net sales (EUR 6.8M). 4. Demand_History does not reconcile with the order lines (54% to 63% of the units, rising while orders are flat). 5. `customer_type` and `sales_channel` are unrelated.
+
+## Data Cleaning and Preprocessing (Step 6)
+
+Report: [reports/cleaning_report.md](reports/cleaning_report.md) | Notebook: [notebooks/03_cleaning.ipynb](notebooks/03_cleaning.ipynb)
+
+**How to run:**
+
+```
+python src/test_cleaning.py     # 14 checks on deliberately messy data
+python src/run_cleaning.py      # clean all tables -> data/processed/ and the report
+```
+
+**Pipeline design:** `src/cleaning.py` has 4 reusable cleaners (types, duplicates, missing values, outliers) plus the Velora business fixes. `src/preprocess.py` handles encoding and scaling with a date-based train/test split to avoid data leakage.
+
+### Results
+
+- The raw file needed no row removals; the work was fixing contradictions.
+- `first_order_date` rebuilt from orders (52% of orders preceded the stated date, now 0%).
+- `season` rebuilt from the month (24% matched, now 100%).
+- Supplier on-time rate calculated from deliveries (42.7%, not the stated 90%).
+- Cancelled orders and forecast-period months are flagged, not deleted.
+- Outliers are judged within groups and flagged, never deleted.
+
+![Outliers judged within groups](reports/figures/fig20_outliers_grouped.png)
