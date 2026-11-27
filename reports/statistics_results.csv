@@ -1,0 +1,35 @@
+id,area,question,method,n,p_value,effect_name,effect,note,p_holm,p_bh,verdict
+T01,Quality,Does yield differ between production lines?,ANOVA,465,0.6172559441493662,eta-squared,0.0020864416502364576,,1.0,0.7990897200063286,Not significant
+T02,Quality,Does yield differ by batch status (Completed / Delayed / On Hold)?,ANOVA,465,0.728581803535182,eta-squared,0.0013698633438831277,,1.0,0.7990897200063286,Not significant
+T03,Quality,Does yield differ between products?,ANOVA,465,1.853106070155851e-31,eta-squared,0.32105557395812945,Expected: each product has its own yield target,6.115250031514308e-30,3.1502803192649465e-30,Significant
+T04,Quality,Is the average yield different from the product targets?,one-sample t-test,465,0.3835284019386546,Cohen's d,0.04044917670966518,,1.0,0.7244425369952365,Not significant
+T05,Quality,Is yield drifting up or down over time?,Spearman correlation with batch order,465,0.14283051586157477,rho,0.06805748738082971,,1.0,0.373556733791811,Not significant
+T06,Quality,Does the review rate differ by product?,chi-square,465,0.4896866951540596,Cramer's V,0.15701026877461924,,1.0,0.7492586751587554,Not significant
+T07,Quality,Does the review rate differ by production line?,chi-square,465,0.3611146310827569,Cramer's V,0.06618838651431987,,1.0,0.7244425369952365,Not significant
+T08,Quality,Is temperature different in Review batches?,Welch t-test,465,0.2686032183742524,Cohen's d (Review - Pass),0.11484300460131909,Mann-Whitney p = 0.259,1.0,0.6088339616483054,Not significant
+T09,Quality,Is pH different in Review batches?,Welch t-test,465,0.03106155193810014,Cohen's d (Review - Pass),0.26886743854883094,Mann-Whitney p = 0.011,0.8386619023287037,0.13201159573692559,Nominal only
+T10,Quality,Is specific gravity different in Review batches?,Welch t-test,465,0.663153662352969,Cohen's d (Review - Pass),-0.04372298902016525,Mann-Whitney p = 0.645,1.0,0.7990897200063286,Not significant
+T11,Quality,Is measured ABV different in Review batches?,Welch t-test,465,0.4371218139986048,Cohen's d (Review - Pass),-0.08558455054454774,Mann-Whitney p = 0.489,1.0,0.7431070837976281,Not significant
+T12,Quality,Is colour different in Review batches?,Welch t-test,465,0.4177189653317634,Cohen's d (Review - Pass),-0.08336072465865019,Mann-Whitney p = 0.407,1.0,0.7431070837976281,Not significant
+T13,Quality,Is defect units different in Review batches?,Welch t-test,465,0.36783985526582197,Cohen's d (Review - Pass),-0.09248018799208024,Mann-Whitney p = 0.279,1.0,0.7244425369952365,Not significant
+T14,Quality,Is the ABV gap from the declared ABV larger in Review batches?,Welch t-test,465,7.247762673244748e-12,Cohen's d (Review - Pass),0.7960736709786743,Mann-Whitney p = 1.7e-13,2.246806428705872e-10,6.160598272258036e-11,Significant
+T15,Quality,Is a batch more likely to be Review if the previous batch on its line was Review?,chi-square,462,0.6759058285791826,Cramer's V,0.02463784390791692,,1.0,0.7990897200063286,Not significant
+T16,Supply,Does the late-delivery share differ between suppliers?,chi-square,1200,0.09005123751666072,Cramer's V,0.15184133086839452,,1.0,0.2783401886878604,Not significant
+T17,Supply,Were deliveries later in 2023 than afterwards?,chi-square (2023 vs 2024-26),1200,0.06958868788009342,Cramer's V,0.054308549862516015,,1.0,0.2621724928429981,Not significant
+T18,Supply,Does a supplier's STATED on-time rate predict its real one?,Spearman correlation,20,0.8077320250121374,rho,-0.05811124084349804,,1.0,0.8322087530428082,Not significant
+T19,Supply,Does delay differ by material category?,Kruskal-Wallis,1200,0.5886194969877094,eta-squared,0.004307493342063627,,1.0,0.7990897200063286,Not significant
+T20,Profit,Does margin rise with price (13 products)?,linear regression,13,0.00023213219589669082,r,0.8501373963884572,R-squared = 0.72,0.006731833681004034,0.0013154157767479146,Significant
+T21,Profit,Does a bigger discount lower the margin?,linear regression,9328,0.0,r,-0.47579684292202373,Partly arithmetic: a discount cuts revenue while cost stays,0.0,0.0,Significant
+T22,Profit,Does a bigger discount bring bigger orders (non-Online)?,linear regression,6916,0.7202618432150911,r,-0.004306892947355717,,1.0,0.7990897200063286,Not significant
+T23,Profit,Does the margin differ by sales channel?,ANOVA,9328,0.20659250546711666,eta-squared,0.000489417013455703,,1.0,0.5017246561344262,Not significant
+T24,Sales,Do Jan-Oct monthly sales differ between years?,ANOVA,40,0.9912990815159939,eta-squared,0.002857792142642418,,1.0,0.9912990815159939,Not significant
+T25,Sales,Is monthly sales trending up or down (46 months)?,Spearman correlation with time,46,0.6944112831350633,rho,-0.05951279679309281,,1.0,0.7990897200063286,Not significant
+T26,Sales,Do sales differ by calendar month (seasonality)?,Kruskal-Wallis,46,0.07710955671852884,eta-squared,0.41519043496221647,ANOVA p = 0.039,1.0,0.2621724928429981,Not significant
+T27,Sales,Does the cancellation rate differ by channel?,chi-square,4500,0.5068514567250404,Cramer's V,0.022753358702431285,,1.0,0.7492586751587554,Not significant
+T28,Sales,Does the cancellation rate differ by year?,chi-square,4500,0.7660366652867651,Cramer's V,0.01595671801384248,,1.0,0.8139139568671879,Not significant
+T29,Demand,Does total demand differ by calendar month (after removing the trend)?,Kruskal-Wallis,46,0.0007114357950697551,eta-squared,0.7123582239394023,ANOVA p = 1.9e-06,0.019920202261953145,0.0034555452903388103,Significant
+T30,Demand,Is total demand trending up (seasonally adjusted)?,regression with month effects,46,0.0001277313258822896,units per month,256.78472222221814,,0.003831939776468688,0.0008685730159995693,Significant
+T31,Demand,Does the total-demand seasonal pattern show up in individual product-months?,Spearman correlation,598,2.6234138358974247e-13,rho,0.29305129143861336,"Index fitted on all months, so descriptive only",8.394924274871759e-12,2.973202347350415e-12,Significant
+T32,Demand,Do promotions raise units sold?,Spearman correlation,598,0.12690480432181084,rho,0.062489770125210446,,1.0,0.35956361224513067,Not significant
+T33,Other,Does downtime differ by maintenance type?,ANOVA,300,0.5498262625415546,eta-squared,0.004019864531697276,,1.0,0.7789205386005357,Not significant
+T34,Other,Does the share of negative feedback differ by feedback type?,chi-square,500,0.4823758986295217,Cramer's V,0.05400117021690774,,1.0,0.7492586751587554,Not significant

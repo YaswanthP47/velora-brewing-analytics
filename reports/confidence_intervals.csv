@@ -1,0 +1,38 @@
+area,quantity,estimate,low,high,method,n,unit
+Quality,Average batch yield,88.60064516129033,88.13189420259441,89.06939611998625,t-interval,465,%
+Quality,"Average yield, Maribor Line A",88.9525925925926,88.08346658555905,89.82171859962614,t-interval,135,%
+Quality,"Average yield, Maribor Line B",88.37388535031847,87.56738249330805,89.1803882073289,t-interval,157,%
+Quality,"Average yield, Maribor Line C",88.53179190751445,87.74939984991676,89.31418396511214,t-interval,173,%
+Quality,Average yield minus product target,0.17483870967741932,-0.2190593352820927,0.5687367546369313,t-interval,465,points
+Quality,Batch review rate,29.677419354838708,25.705390718797737,33.98247466849046,Wilson,465,%
+Quality,"Review rate, Maribor Line A",30.37037037037037,23.245120412638393,38.58184362953111,Wilson,135,%
+Quality,"Review rate, Maribor Line B",33.12101910828025,26.239446695125636,40.808850187654855,Wilson,157,%
+Quality,"Review rate, Maribor Line C",26.011560693641616,20.04590444678058,33.01940017493899,Wilson,173,%
+Supply,Share of late deliveries,57.25,54.43217210424313,60.02155838701723,Wilson,1200,%
+Supply,"Share of late deliveries, 2023",61.81229773462783,56.281544782490165,67.05295834736518,Wilson,309,%
+Supply,"Share of late deliveries, 2024",54.60526315789473,48.98583726147448,60.109753731130866,Wilson,304,%
+Supply,"Share of late deliveries, 2025",56.62650602409639,51.249836672578155,61.85158331127548,Wilson,332,%
+Supply,"Share of late deliveries, 2026",55.68627450980392,49.549638174699396,61.654131164310954,Wilson,255,%
+Profit,Gross margin (all products),65.9668053825836,65.87143680855128,66.06706943528422,bootstrap over orders,3735,%
+Profit,"Gross margin, Alpine Gold",63.31104560368831,63.062934849513766,63.54775318267919,bootstrap over lines,749,%
+Profit,"Gross margin, Alpine IPA",69.68689831925462,69.47174977456848,69.88635528821725,bootstrap over lines,692,%
+Profit,"Gross margin, Baltic Wheat",61.69870613020149,61.423172609941666,61.973287132637346,bootstrap over lines,674,%
+Profit,"Gross margin, Citrus Wave",68.72705071801909,68.52225640562463,68.93223853766612,bootstrap over lines,715,%
+Profit,"Gross margin, Crimson Amber",65.55372809749444,65.30020872737089,65.76013997312138,bootstrap over lines,695,%
+Profit,"Gross margin, Forest Pilsner",61.74054808150403,61.492351257840994,61.9979723531387,bootstrap over lines,724,%
+Profit,"Gross margin, Honey Valley",68.35598345116772,68.14318797732936,68.56620021683403,bootstrap over lines,678,%
+Profit,"Gross margin, Maribor Dark",67.32857618335734,67.12993752854052,67.52559688847064,bootstrap over lines,766,%
+Profit,"Gross margin, Midnight Stout",68.24475947021662,68.05897276178594,68.44344109772645,bootstrap over lines,747,%
+Profit,"Gross margin, Royal Reserve",68.10123356787456,67.89550869978449,68.29742032013672,bootstrap over lines,738,%
+Profit,"Gross margin, Summer Berry",68.8686860000452,68.66027518267622,69.07421302986394,bootstrap over lines,704,%
+Profit,"Gross margin, Velora Classic Lager",59.65962930381525,59.40734791480074,59.910157983392,bootstrap over lines,728,%
+Profit,"Gross margin, Zero Horizon",60.823896003204915,60.56502216231701,61.062560963726476,bootstrap over lines,718,%
+Profit,Margin gain per +1 EUR wholesale price,12.223640870092494,7.1992795847370825,17.248002155447907,regression over 13 products,13,points
+Profit,Margin change per +1 point of discount,-0.3850119923560236,-0.39945882224860874,-0.3705651624634385,regression over lines,9328,points
+Profit,Units per line change per +1 point of discount (non-Online),-0.273952601287443,-1.7735226619406304,1.2256174593657445,regression over lines,6916,units
+Sales,Average monthly net sales Jan-Oct 2023,150.030392,134.6752697996786,165.38551420032138,t-interval over months,10,EUR thousand
+Sales,Average monthly net sales Jan-Oct 2024,146.985376,132.07880161367584,161.89195038632414,t-interval over months,10,EUR thousand
+Sales,Average monthly net sales Jan-Oct 2025,148.27776299999996,131.9367174985911,164.61880850140886,t-interval over months,10,EUR thousand
+Sales,Average monthly net sales Jan-Oct 2026,149.037125,133.02490607011305,165.04934392988696,t-interval over months,10,EUR thousand
+Sales,Share of cancelled orders,17.0,15.930751742821563,18.125541597981826,Wilson,4500,%
+Demand,Demand trend per month (seasonally adjusted),256.78472222221814,136.35128427156764,377.21816017286864,regression with month effects,46,units / month

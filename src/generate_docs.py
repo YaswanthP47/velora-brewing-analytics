@@ -95,7 +95,7 @@ D = {  # column descriptions, grouped by table
         "test_date": "Date of the test (same as production date)", "temperature_c": "Temperature in degrees C",
         "ph_value": "Acidity (pH)", "specific_gravity": "Density of the beer relative to water",
         "measured_abv_percent": "Measured alcohol, %", "colour_ebc": "Beer colour (EBC scale)",
-        "defect_units": "Number of defective units found", "quality_status": "Pass or Review"},
+        "defect_units": "Number of defective units found", "quality_status": "Pass, or Review when pH is outside 4.1-5.0 or the measured ABV is more than 0.30 points from the product's declared ABV (matches 99.4% of batches)"},
     "Procurement_Orders": {
         "po_id": "Unique purchase order code (PO00001...)", "order_date": "Date the order was placed",
         "supplier_id": "Supplier (links to Suppliers)", "material_id": "Material (links to Raw_Materials)",
@@ -301,8 +301,10 @@ sold to customers (`Sales_Orders` + `Sales_Order_Lines`), and customers react (`
 - Cancelled orders keep their order lines. **Revenue KPIs exclude cancelled orders.**
 - `unit_selling_price_eur` is rounded to 2 decimals, so recomputed net sales differ from the stored value by up to 0.5%. We allow a 1% tolerance.
 - Production batches occur exactly every 3 days; each has exactly one QC test on the same day.
-- `batch_status`, `quality_status` and `order_status` appear to be assigned independently of the measurements
-  and dates in the file. Do not expect strong predictive signal in Step 7 for these targets.
+- `batch_status` and `order_status` appear to be assigned independently of yield and dates in the file.
+- `quality_status` is **not** random: a batch is Review when its pH is outside 4.1-5.0 **or** its measured ABV is more than
+  0.30 points from the product's declared ABV. This rule matches 99.4% of batches (the 3 misses sit exactly on the 0.30 boundary).
+  It was found in Step 7 with the engineered feature `abv_gap`; confirm the thresholds with the brewery.
 - This is an analytical simulation only. It is not regulatory, excise or food-safety evidence.
 
 ## 3. Known data issues (found in validation)
@@ -322,6 +324,7 @@ sold to customers (`Sales_Orders` + `Sales_Order_Lines`), and customers react (`
 | 11 | Demand_History does not reconcile with orders | Reports 54%-63% of order-line units and rises while orders are flat | Treat it as a separate series when forecasting |
 | 12 | `customer_type` and `sales_channel` unrelated | An "Online Customer" buys only 2% through the Online channel, like every other type | Do not use customer_type to explain channel behaviour |
 | 13 | Online orders are tiny | Online has 26% of orders but 2.2% of sales (average 40 units per line, maximum 80) | Analyse Online separately from other channels |
+| 14 | QC status is a specification, not a random label | Review = pH outside 4.1-5.0 or ABV more than 0.30 points from the declared ABV (99.4% match); raw averages of Pass and Review look alike because errors go in both directions | Classifying Review from measurements only rediscovers the rule; an honest early-warning model must use pre-test features only |
 
 ## 4. Synthetic data generator (`src/generate_synthetic_data.py`)
 
@@ -333,7 +336,7 @@ Use `--scale 0.5` for half the rows.
 | Suppliers | 20 suppliers; name, country and category consistent; lead time 2-18 days; stated on-time rate 82%-97% |
 | Procurement | 1,200 orders; supplier delivers only its own material category; late with probability (1 - stated on-time rate); lateness 1-11 days |
 | Production | Batch every few days; planned 700-3,187 L; yield ~ Normal(product target, 0.045) clipped 75%-99%; status 61.5% Completed / 19.6% Delayed / 18.9% On Hold |
-| Quality control | One test per batch; Review rate 29.7%, independent of measurements (as in the original) |
+| Quality control | One test per batch; Review when pH is outside 4.1-5.0 or ABV is more than 0.30 points from the declared ABV (the rule found in the original) |
 | Sales | 4,500 orders, 1-4 lines each; only products already launched; price = wholesale x 0.94-1.08; discount 0%-18%; cancelled 17% |
 | Customers | `first_order_date` derived from orders, so no order precedes it |
 | Feedback | 12 sentences; each fixes sentiment AND issue category (so categories are learnable) |

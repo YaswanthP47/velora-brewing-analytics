@@ -23,7 +23,9 @@
 ![Review rate](figures/fig05_review_rate.png)
 
 - **29.7%** of batches go to Review. Rates differ by product (19% to 46%) and line (26% to 33%), but the differences are consistent with chance (chi-square p = 0.49 and 0.36; only 23 to 46 batches per product).
-- The six lab measurements are almost identical for Pass and Review batches, so they do not explain the decision.
+- Raw lab averages look the same for Pass and Review, but that is misleading. **Review is a specification check:** a batch goes to Review when its pH is outside 4.1 to 5.0 or its measured ABV is more than 0.30 points away from the product's declared ABV. This rule matches **99.4%** of batches (the 3 misses sit exactly on the 0.30 boundary). The thresholds were found in the data, so confirm them with the brewery.
+
+![Review rule](figures/fig06b_review_rule.png)
 
 ## 4. Sales
 ![Sales trend](figures/fig07_sales_trend.png)

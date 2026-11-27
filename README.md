@@ -33,6 +33,7 @@ Goal: Excel -> Python -> SQL -> EDA -> Cleaning -> Statistics -> ML -> NLP/GenAI
 - [x] Step 4: Documentation and synthetic data generator
 - [x] Step 5: EDA and visualization
 - [x] Step 6: Data cleaning and preprocessing
+- [x] Step 7: Statistics and Feature Engineering
 
 ## Known data issues (found in Step 2 validation)
 
@@ -86,7 +87,7 @@ Revenue and profit figures exclude cancelled orders. 2026 contains data only up 
 ### Key findings
 
 - **Manufacturing:** average yield is 88.6% and 11.3% of planned volume is lost. Production lines and batch status make no difference to yield.
-- **Quality:** 29.7% of batches go to Review. Differences between products and lines are consistent with chance (chi-square p = 0.49 and 0.36), and lab measurements do not explain the decision.
+- **Quality:** 29.7% of batches go to Review. Review is a specification check: pH outside 4.1 to 5.0, or a measured ABV more than 0.30 points from the declared ABV (matches 99.4% of batches).
 - **Sales:** January to October sales are flat across all four years (EUR 1.47M to 1.50M), with no stable seasonality. Gross margin is 66.0%.
 - **Margin follows price:** the cheapest beers earn about 60% margin, the most expensive about 69% (r = 0.85).
 - **Discounts do not pay off:** margin falls from 68.3% to 63.0% as discounts rise, while units per order stay the same.
@@ -124,3 +125,25 @@ python src/run_cleaning.py      # clean all tables -> data/processed/ and the re
 - Outliers are judged within groups and flagged, never deleted.
 
 ![Outliers judged within groups](reports/figures/fig20_outliers_grouped.png)
+
+## Statistics and Feature Engineering (Step 7)
+
+Reports: [statistics](reports/statistics_report.md) | [features](reports/feature_report.md) | Notebook: [notebooks/04_statistics_features.ipynb](notebooks/04_statistics_features.ipynb)
+
+**How to run:**
+
+```
+python src/test_features.py     # leakage tests
+python src/run_statistics.py    # 34 tests, 37 confidence intervals -> reports/
+python src/run_features.py      # 5 feature tables -> data/features/
+```
+
+### Key findings
+
+- 7 of 34 hypothesis tests survive Holm correction; 26 found no evidence of a difference.
+- QC Review is a specification check (pH outside 4.1-5.0 or ABV more than 0.30 points from the declared ABV), found with the engineered feature `abv_gap`.
+- Margin rises with price (+12.2 points per EUR 1); discounts cut margin (-0.39 points per point) without raising order size.
+- Total demand is seasonal (calendar month explains 71% of variation) and trending up (+257 units per month).
+- Lag features carry almost no signal: "same as last month" is a worse forecast than the product average.
+
+![Test overview](reports/figures/fig23_test_overview.png)
